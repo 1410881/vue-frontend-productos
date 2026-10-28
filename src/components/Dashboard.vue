@@ -5,15 +5,12 @@ import axios from 'axios'
 
 const router = useRouter()
 
-// 1. Estado para guardar los productos reales
 const productos = ref([])
 const cargando = ref(true)
 
-// 2. Función para traer los datos de Laravel
 const cargarProductos = async () => {
   try {
     const respuesta = await axios.get('http://127.0.0.1:8000/api/productos')
-    // Accedemos a .data.data por el formato de respuesta que creamos
     productos.value = respuesta.data.data 
   } catch (error) {
     console.error('Error al cargar productos para el dashboard:', error)
@@ -22,25 +19,20 @@ const cargarProductos = async () => {
   }
 }
 
-// 3. Cálculos automáticos (Métricas)
 const totalProductos = computed(() => productos.value.length)
 
 const valorInventario = computed(() => {
-  // Sumamos (precio * stock) de cada producto
   return productos.value.reduce((total, p) => total + (p.price * p.stock), 0)
 })
 
 const bajoStock = computed(() => {
-  // Filtramos los productos con stock menor a 5
   return productos.value.filter(p => p.stock < 5).length
 })
 
-// 4. Función para formatear precios
 const formatearPrecio = (precio) => {
   return new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(precio)
 }
 
-// 5. Cargar datos al montar el componente
 onMounted(() => {
   cargarProductos()
 })
@@ -50,7 +42,6 @@ onMounted(() => {
   <div class="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8">
     <div class="max-w-7xl mx-auto">
       
-      <!-- Encabezado del Dashboard -->
       <div class="mb-8 flex justify-between items-center">
         <div>
           <h1 class="text-3xl font-extrabold text-gray-900">Panel de Control</h1>
@@ -64,16 +55,13 @@ onMounted(() => {
         </router-link>
       </div>
 
-      <!-- Spinner de carga (opcional) -->
       <div v-if="cargando" class="text-center py-20 text-gray-500">
         Cargando datos del inventario...
       </div>
 
       <div v-else>
-        <!-- Tarjetas de Métricas (KPIs) -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           
-          <!-- Tarjeta 1: Total Productos -->
           <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-500 mb-1">Total Productos</p>
@@ -86,7 +74,6 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Tarjeta 2: Valor del Inventario -->
           <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-500 mb-1">Valor del Inventario</p>
@@ -99,7 +86,6 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- Tarjeta 3: Bajo Stock -->
           <div class="bg-white rounded-2xl shadow-sm p-6 border border-gray-100 flex items-center justify-between">
             <div>
               <p class="text-sm font-medium text-gray-500 mb-1">Bajo Stock (Alerta)</p>
@@ -114,7 +100,6 @@ onMounted(() => {
 
         </div>
 
-        <!-- Tabla de Inventario -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           <div class="p-6 border-b border-gray-100 flex justify-between items-center">
             <h2 class="text-lg font-bold text-gray-900">Inventario Reciente</h2>
@@ -145,7 +130,6 @@ onMounted(() => {
                     <span v-else class="px-2 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">Bajo Stock</span>
                   </td>
                 </tr>
-                <!-- Si no hay productos -->
                 <tr v-if="productos.length === 0">
                   <td colspan="5" class="p-8 text-center text-gray-500">
                     No hay productos registrados aún.

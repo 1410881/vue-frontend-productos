@@ -1,5 +1,4 @@
 <script setup>
-// No necesitas importar nada aquí
 </script>
 
 <template>

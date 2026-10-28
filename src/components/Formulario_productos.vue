@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import axios from 'axios'
-import CategoriaModal from './CategoriaModal.vue' // <-- IMPORTAMOS EL MODAL AQUÍ
+import CategoriaModal from './CategoriaModal.vue' 
 
 const router = useRouter()
 const route = useRoute() 
@@ -10,7 +10,7 @@ const route = useRoute()
 const categorias = ref([])
 const errorGuardado = ref('')
 const esEdicion = ref(false)
-const mostrarModal = ref(false) // <-- VARIABLE PARA ABRIR/CERRAR EL MODAL
+const mostrarModal = ref(false) 
 
 const formData = ref({
   name: '',
@@ -115,7 +115,6 @@ onMounted(() => {
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <!-- AQUÍ ESTÁ EL BOTÓN QUE ABRE EL MODAL -->
                 <div class="flex justify-between items-center mb-1">
                   <label class="block text-sm font-medium text-gray-700">Categoría</label>
                   <button type="button" @click="mostrarModal = true" class="text-xs text-indigo-600 hover:text-indigo-800 font-bold">
@@ -156,7 +155,6 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- EL MODAL SE RENDERIZA AQUÍ -->
     <CategoriaModal 
       v-if="mostrarModal" 
       @close="mostrarModal = false" 

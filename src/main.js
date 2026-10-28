@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import './style.css'
-import router from './router' // Como tienes index.js, Vite lo encuentra solo
+import router from './router' 
 
 const app = createApp(App)
 const pinia = createPinia()

@@ -14,7 +14,7 @@ const API_URL = 'http://127.0.0.1:8000/api/categorias'
 const cargarCategorias = async () => {
   try {
     const res = await axios.get(API_URL)
-    categorias.value = res.data.data // <-- Modificado
+    categorias.value = res.data.data 
   } catch (e) {
     error.value = 'Error al cargar categorías.'
   }
